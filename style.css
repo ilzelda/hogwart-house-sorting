@@ -1,0 +1,29 @@
+body{
+    background-color: darkslategray;
+    color: white;
+    height: 100%;
+
+}
+
+article{
+    display: flex;
+    flex-direction: column;
+}
+
+.questions{
+    display: none;
+}
+
+.result{
+    display: none;
+}
+
+.main_image{
+    width : 300px;
+    height: 300px;
+}
+
+/*.choice{
+    display: flex;
+    flex-direction: row;
+} */

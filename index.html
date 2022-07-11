@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body class="container">
+    <article class="start">
+        <h1 class="mt-5 text-center">나의 호그와트 기숙사는?</h1>
+        <img class="rounded mx-auto d-block mt-5 main_image" src="./images/houses.png" alt="">
+        <button class="btn btn-secondary mt-5" type="button" onclick="start();">테스트 시작하기</button>
+    </article>
+
+    <article class="questions">
+        <h2 id="question" class=" text-center mt-5">문제내용</h2>
+        <input type="hidden" id="houses" value="G">
+        <div class="btn-group mt-5" role="group">
+            <button class="point btn btn-light mr-2" type="button" value="4">4</button>
+            <button class="point btn btn-light mr-2" type="button" value="3">3</button>
+            <button class="point btn btn-light mr-2" type="button" value="2">2</button>
+            <button class="point btn btn-light" type="button" value="1">1</button>
+        </div>
+    </article>
+
+    <article class="result">
+        <img id= 'house_img' class="rounded mx-auto d-block mt-5 main_image" src="" alt="">
+        <h2 id="house_sorted" class="mt-5 text-center">기숙사 이름</h2>
+        <h3 id="house_description" class="text-center mt-5">설명</h3>
+    </article>
+
+    <input type="hidden" id="G" value="0">
+    <input type="hidden" id="S" value="0">
+    <input type="hidden" id="R" value="0">
+    <input type="hidden" id="H" value="0">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script>
+        let q = {
+            1:{'question':"슬리데린문제", "house":"S"},
+            2:{'question':"그리핀도르문제", "house":"G"},
+            3:{'question':"래번클로문제", "house":"R"},
+            4:{'question':"후플푸프문제", "house":"H"},
+        }
+
+        let result = {
+            'S':{'name' : '슬리데린', 'description':'재간꾼들을 위한 기숙사'},
+            'G':{'name' : '그리핀도르', 'description':'용감하고 대담한 자를 위한 기숙사'},
+            'R':{'name' : '래번클로', 'description':'현명하고 사려 깊은자들을 위한 기숙사'},
+            'H':{'name' : '후플푸프', 'description':'성실하고 진실된 자들을 위한 기숙사'}
+        }
+
+        let page = 1;
+
+        function start(){
+            $('.start').hide();
+            $('.questions').show();
+            next();
+        }
+
+        $('.point').click(function(){
+            let house=$('#houses').val();
+            let point=$(this).val();
+            $("#"+house).val(parseInt($('#'+house).val())+parseInt(point));
+
+            next();
+        })
+        // function calc(){ 
+        //     let house=$('#houses').val();
+        //     let point=$(this).val();
+        //     console.log(point);
+        //     $('#'+house).val(parseInt($('#'+house).val())+parseInt(point));
+
+        // }
+        function next(){
+            if(page == 5){
+                let houses=['S','G','R','H'];
+                let maxval=0;
+                let sorted;
+                for(let i=0; i<4 ; i++){
+                    if(maxval < $('#'+houses[i]).val()){
+                        maxval = $('#'+houses[i]).val();
+                        sorted = houses[i];
+                    }
+                }
+                // console.log(sorted)
+                $('#house_sorted').html(result[sorted]['name']);
+                $('#house_description').html(result[sorted]['description']);
+                $('#house_img').attr('src','./images/'+sorted+'.png');
+                
+                $('.questions').hide();
+                $('.result').show();
+            }
+            else{
+                console.log(page);
+                $("#question").html(q[page]['question']);
+                $("#houses").val(q[page]["house"]);
+                page++;
+            }
+        }
+    </script>
+
+
+</body>
+</html>
